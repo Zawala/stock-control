@@ -34,13 +34,21 @@ class ProductController extends Controller
 {
     try {
         $product = Product::create($request->all());
-        return response()->json($product, 201);
+        return response()->json([
+            'success' => true,
+            'message' => 'Product created successfully',
+            'data' => $product
+        ], 200);
     } catch (\Exception $e) {
         // Log the error message for debugging purposes
         \Log::error($e->getMessage());
 
         // Return a custom error response
-        return response()->json(['error' => 'There was a problem creating the product.'], 500);
+        return response()->json([
+            'success' => false,
+            'message' => 'There was a problem creating the product.',
+            'error' => $e->getMessage() // Optionally include the error message for debugging
+        ], 500);
     }
 }
 
@@ -78,7 +86,17 @@ class ProductController extends Controller
      */
     public function destroy(Product $product)
 {
+    if (!$product) {
+        return response()->json([
+            'success' => false,
+            'message' => 'Product not found',
+        ], 404);
+    }
+
     $product->delete();
-    return response()->json(null, 204);
+    return response()->json([
+        'success' => true,
+        'message' => 'Product deleted successfully',
+    ], 200);
 }
 }

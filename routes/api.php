@@ -16,7 +16,7 @@ use App\Http\Controllers\ProductController;
 |
 */
 Route::apiResource('products', ProductController::class);
-
+Route::delete('/products/{product}', [ProductController::class, 'destroy']);
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });

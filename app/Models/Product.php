@@ -16,4 +16,8 @@ class Product extends Model
         'price',
         'description'
     ];
+    public function getRouteKeyName()
+{
+    return 'code'; // Assuming 'code' is the column that contains the product identifier
+}
 }
