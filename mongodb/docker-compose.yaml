@@ -1,13 +1,25 @@
-version: "3.8"
 services:
-  mongodb:
-    image : mongo
+ mongodb:
+    image: mongo
     container_name: mongodb
     environment:
       - PUID=1000
       - PGID=1000
     volumes:
-      - /home/user/Documents/github/grpcwallet/mongodb/database
+      - /home/user/Documents/github/stock-control/mongodb/database
     ports:
-    - 27010:27017
+      - 27010:27017
+    restart: unless-stopped
+
+ postgres:
+    image: postgres:latest
+    container_name: postgres
+    environment:
+      - POSTGRES_DB=laravel
+      - POSTGRES_USER=root
+      - POSTGRES_PASSWORD=fearofgod
+    volumes:
+      - /home/user/Documents/github/stock-control/postgres/data:/var/lib/postgresql/data
+    ports:
+      - 5432:5432
     restart: unless-stopped
